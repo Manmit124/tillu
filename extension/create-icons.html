@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Tillu Icons</title>
+</head>
+<body>
+    <h2>Tillu Extension Icons</h2>
+    <p>Right-click each canvas and "Save image as..." to create the icons:</p>
+    
+    <div style="margin: 20px 0;">
+        <p>icon16.png (16x16)</p>
+        <canvas id="icon16" width="16" height="16" style="border: 1px solid #ccc; image-rendering: pixelated; width: 64px; height: 64px;"></canvas>
+    </div>
+    
+    <div style="margin: 20px 0;">
+        <p>icon48.png (48x48)</p>
+        <canvas id="icon48" width="48" height="48" style="border: 1px solid #ccc; width: 96px; height: 96px;"></canvas>
+    </div>
+    
+    <div style="margin: 20px 0;">
+        <p>icon128.png (128x128)</p>
+        <canvas id="icon128" width="128" height="128" style="border: 1px solid #ccc; width: 128px; height: 128px;"></canvas>
+    </div>
+
+    <script>
+        function drawIcon(canvasId, size) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            
+            // Background - Blue gradient
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#3B82F6');
+            gradient.addColorStop(1, '#2563EB');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, size, size);
+            
+            // Draw "T" letter
+            ctx.fillStyle = 'white';
+            ctx.font = `bold ${size * 0.6}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('T', size / 2, size / 2);
+        }
+
+        drawIcon('icon16', 16);
+        drawIcon('icon48', 48);
+        drawIcon('icon128', 128);
+
+        // Auto-download icons
+        setTimeout(() => {
+            ['icon16', 'icon48', 'icon128'].forEach(id => {
+                const canvas = document.getElementById(id);
+                const link = document.createElement('a');
+                link.download = `${id}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }, 1000);
+    </script>
+</body>
+</html>
+
